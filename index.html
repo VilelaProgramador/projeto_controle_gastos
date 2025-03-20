@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Gastos</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Controle de Gastos</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Adicionar Gasto</h2>
+        <p>Adicione um novo gasto</p>
+        <p>Os campos com * são obrigatórios</p>
+        <p>Os campos com (livre) são campos livres, você pode adicionar qualquer valor</p>
+
+        <form method="POST" action="/adicionar">
+            <input type="text" name="descricao" placeholder="Descrição" required>
+            <input type="number" name="valor" step="0.01" placeholder="Valor" required>
+            <input type="date" name="data" required>
+            <input type="text" name="categoria" placeholder="Categoria" required>
+            <select name="tipo" required>
+              <option value="Receita">Receita</option>
+              <option value="Despesa">Despesa</option>
+            </select>
+            <button type="submit">Adicionar</button>
+          </form>
+
+        <h2>Gastos Recentes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gasto in gastos %}
+                <tr>
+                    <td>{{ gasto['descricao'] }}</td>
+                    <td>€ {{ gasto['valor'] }}</td>
+                    <td>{{ gasto['data'] }}</td>
+                    <td>{{ gasto['categoria'] }}</td>
+                    <td>{{ gasto['tipo'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Gráficos 📊</h2>
+        <h3>Receitas por Categoria</h3>
+        <img src="/static/receitas.png" alt="Gráfico de Receitas">
+
+        <h3>Despesas por Categoria</h3>
+        <img src="/static/despesas.png" alt="Gráfico de Despesas">
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

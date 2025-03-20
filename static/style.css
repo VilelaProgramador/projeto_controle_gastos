@@ -1,0 +1,109 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #d8d5d5;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 5px 100px;
+  text-align: start;
+  justify-content: space-between;
+  display: flex;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px;
+  display: block;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    color: #000;
+    margin-left: 20px;
+}
+
+p {
+    color:#5c5b5b;
+    margin: 0 20px 0 20px;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 99%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 15px;
+    background-color: #434445;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #1f1f1f;
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+table tr:first-child {
+    background-color: #4a90e2;
+    color: white;
+    text-align: left;
+}
+
+table td, table th {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo dos gráficos */
+img {
+    display: block;
+    margin: 20px auto;
+    max-width: 90%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+
