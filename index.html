@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Gastos</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -17,25 +18,39 @@
         </nav>
     </header>
 
+    <div class="dashboard">
+        <div class="card receita">
+            <h3>Total de Receitas</h3>
+            <p>€ {{ total_receitas or 0 }}</p>
+        </div>
+        <div class="card despesa">
+            <h3>Total de Despesas</h3>
+            <p>€ {{ total_despesas or 0 }}</p>
+        </div>
+        <div class="card saldo">
+            <h3>Saldo Atual</h3>
+            <p>€ {{ saldo or 0 }}</p>
+        </div>
+    </div>
+
     <main>
         <h2>Adicionar Gasto</h2>
         <p>Adicione um novo gasto</p>
-        <p>Os campos com * são obrigatórios</p>
-        <p>Os campos com (livre) são campos livres, você pode adicionar qualquer valor</p>
-
         <form method="POST" action="/adicionar">
-            <input type="text" name="descricao" placeholder="Descrição" required>
-            <input type="number" name="valor" step="0.01" placeholder="Valor" required>
+            <input type="text" name="descricao" placeholder="Descrição*" required>
+            <input type="number" name="valor" step="0.01" placeholder="Valor*" required>
             <input type="date" name="data" required>
-            <input type="text" name="categoria" placeholder="Categoria" required>
+            <input type="text" name="categoria" placeholder="Categoria*" required>
             <select name="tipo" required>
-              <option value="Receita">Receita</option>
-              <option value="Despesa">Despesa</option>
+                <option value="Receita">Receita</option>
+                <option value="Despesa">Despesa</option>
             </select>
             <button type="submit">Adicionar</button>
-          </form>
+        </form>
 
         <h2>Gastos Recentes</h2>
+
+        {% if gastos %}
         <table>
             <thead>
                 <tr>
@@ -58,15 +73,26 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <p style="text-align:center; color: #777;">Nenhum gasto cadastrado ainda.</p>
+        {% endif %}
 
         <h2>Gráficos 📊</h2>
         <h3>Receitas por Categoria</h3>
-        <img src="/static/receitas.png" alt="Gráfico de Receitas">
+        <canvas id="graficoReceitas" width="400" height="400"></canvas>
 
         <h3>Despesas por Categoria</h3>
-        <img src="/static/despesas.png" alt="Gráfico de Despesas">
+        <canvas id="graficoDespesas" width="400" height="400"></canvas>
     </main>
 
+    
+    <script>
+        const receitas = {{ receitas | default({}) | tojson }};
+        const despesas = {{ despesas | default({}) | tojson }};
+    </script>
+
+    
     <script src="/static/script.js"></script>
+
 </body>
 </html>

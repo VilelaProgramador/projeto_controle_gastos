@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 app = Flask(__name__) 
 ARQUIVO = 'gastos.csv'
 
+
 if not os.path.exists(ARQUIVO):
     with open(ARQUIVO, mode='w', newline='') as f:
         writer = csv.writer(f)
@@ -15,13 +16,36 @@ if not os.path.exists(ARQUIVO):
 @app.route("/")
 def index():
     gastos = []
+    receitas = {}
+    despesas = {}
+    total_receitas = 0
+    total_despesas = 0
+
     with open(ARQUIVO, newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
             gastos.append(row)
+            valor = float(row['valor'])
 
-    gerar_graficos(gastos)
-    return render_template('index.html', gastos=gastos)
+            if row['tipo'].lower() == 'receita':
+                receitas[row['categoria']] = receitas.get(row['categoria'], 0) + valor
+                total_receitas += valor
+            else:
+                despesas[row['categoria']] = despesas.get(row['categoria'], 0) + valor
+                total_despesas += valor
+
+    saldo = total_receitas - total_despesas
+
+    gerar_graficos(gastos)  
+    return render_template(
+        'index.html',
+        gastos=gastos,
+        receitas=receitas,
+        despesas=despesas,
+        total_receitas=total_receitas,
+        total_despesas=total_despesas,
+        saldo=saldo
+    )
 
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
@@ -36,6 +60,7 @@ def adicionar():
         writer.writerow([descricao, valor, data, categoria, tipo])
 
     return redirect("/")
+
 
 def gerar_graficos(gastos):
     receitas = defaultdict(float)
